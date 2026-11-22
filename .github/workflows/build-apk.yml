@@ -31,12 +31,12 @@ jobs:
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          import re
           p = Path('PromenthiAndroid/app/build.gradle.kts')
           s = p.read_text()
           s = s.replace('JavaVersion.VERSION_1_8', 'JavaVersion.VERSION_17')
           s = s.replace('JavaVersion.VERSION_8', 'JavaVersion.VERSION_17')
-          s = re.sub(r'jvmTarget\\s*=\\s*[\"\\']1\\.8[\"\\']', 'jvmTarget = \"17\"', s)
+          s = s.replace('jvmTarget = \"1.8\"', 'jvmTarget = \"17\"')
+          s = s.replace("jvmTarget = '1.8'", "jvmTarget = '17'")
           p.write_text(s)
           print('Updated app/build.gradle.kts Java compatibility to 17')
           print(p.read_text())
