@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101827">
+<title>Promenthi — The one app for useful and effective study</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+:root{--bg:#0b1220;--panel:#121d2e;--panel2:#172438;--line:#26364c;--text:#edf4ff;--muted:#93a5bd;--mint:#69e0bd;--blue:#7da9ff;--gold:#f4c96b;--red:#ff8b8b;--radius:22px}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 75% -10%,#1c3550 0,transparent 40%),var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh}
+button,input,select{font:inherit}button{cursor:pointer}
+.app{max-width:1160px;margin:auto;padding:28px 28px 110px}.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:30px}
+.brand{display:flex;gap:12px;align-items:center}.logo{width:48px;height:48px;border-radius:16px;background:linear-gradient(145deg,#8af0d0,#56a9bb);display:grid;place-items:center;box-shadow:0 8px 28px #4dd5b533}.logo svg{width:31px;height:31px}.brandname{font:800 22px Manrope;letter-spacing:-.8px}.tagline{font-size:11px;color:var(--muted);margin-top:1px;letter-spacing:.2px}
+.top-right{display:flex;gap:10px;align-items:center}.date-chip,.icon-btn{border:1px solid var(--line);background:#111d2c;color:var(--muted);border-radius:14px;padding:10px 13px}.icon-btn{width:42px;height:42px;display:grid;place-items:center;font-size:17px}
+.welcome{display:flex;justify-content:space-between;align-items:end;margin:18px 0 24px}.eyebrow{color:var(--mint);font-size:11px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase}.welcome h1{font:800 clamp(25px,4vw,34px) Manrope;margin:8px 0 5px;letter-spacing:-1px}.welcome p{color:var(--muted);margin:0;font-size:14px}.day-pill{background:#142b30;color:var(--mint);border:1px solid #28544f;padding:9px 13px;border-radius:99px;font-size:12px}
+.layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(270px,.85fr);gap:20px}.panel{background:linear-gradient(145deg,#152338,#111b2b);border:1px solid var(--line);border-radius:var(--radius);padding:23px;box-shadow:0 18px 50px #0000001a}
+.timer-panel{min-height:525px;display:flex;flex-direction:column;align-items:center}.panel-head{width:100%;display:flex;justify-content:space-between;align-items:center}.panel-title{font:700 15px Manrope}.mode-switch{display:flex;padding:4px;background:#0c1625;border:1px solid var(--line);border-radius:12px;gap:3px}.mode-switch button{border:0;color:var(--muted);background:transparent;padding:8px 12px;border-radius:9px;font-size:12px}.mode-switch button.active{background:#263d51;color:var(--text)}
+.phase{margin-top:27px;color:var(--mint);font-size:11px;font-weight:700;letter-spacing:1.7px;text-transform:uppercase}.timer-wrap{width:min(290px,70vw);aspect-ratio:1;margin:15px auto 12px;position:relative;display:grid;place-items:center}.timer-wrap svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}.track{fill:none;stroke:#26364a;stroke-width:7}.progress{fill:none;stroke:var(--mint);stroke-width:7;stroke-linecap:round;stroke-dasharray:816.8;stroke-dashoffset:0;transition:stroke-dashoffset .5s linear,stroke .3s}.time{font:800 clamp(48px,8vw,65px) Manrope;letter-spacing:-3px;font-variant-numeric:tabular-nums}.timer-sub{color:var(--muted);font-size:12px;margin-top:4px}.timer-controls{display:flex;align-items:center;gap:12px;margin:12px 0 20px}.primary{border:0;background:var(--mint);color:#09221e;font-weight:800;padding:14px 34px;border-radius:14px;box-shadow:0 8px 25px #69e0bd25}.secondary{border:1px solid var(--line);background:#1b2a3e;color:var(--text);padding:13px 18px;border-radius:13px}.subtle{border:0;background:transparent;color:var(--muted);padding:10px}
+.session-info{width:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:auto}.mini-stat{background:#0e1928;border:1px solid #223249;border-radius:13px;padding:12px;text-align:center}.mini-stat b{display:block;font:700 17px Manrope}.mini-stat span{font-size:10px;color:var(--muted)}
+.side-stack{display:flex;flex-direction:column;gap:16px}.schedule-panel{padding:21px}.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.section-head h3{font:700 14px Manrope;margin:0}.muted{color:var(--muted);font-size:12px}.sets-control{display:flex;align-items:center;justify-content:space-between;background:#0e1928;border:1px solid #25364d;border-radius:14px;padding:12px 13px;margin:12px 0}.sets-control span{font-size:12px;color:var(--muted)}.stepper{display:flex;align-items:center;gap:13px}.stepper button{width:27px;height:27px;border-radius:8px;background:#20344a;border:1px solid #30455d;color:white}.stepper b{font:700 16px Manrope;min-width:15px;text-align:center}
+.estimate{display:flex;justify-content:space-between;color:var(--muted);font-size:11px;margin:9px 2px 15px}.estimate strong{color:var(--text)}.full{width:100%}
+.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.quick{padding:14px;border:1px solid var(--line);border-radius:15px;background:#101c2b}.quick .qicon{font-size:18px}.quick b{display:block;font:700 18px Manrope;margin:8px 0 2px}.quick span{color:var(--muted);font-size:10px}
+.quote{background:linear-gradient(130deg,#193a3b,#182c3d);border:1px solid #2d5554;border-radius:18px;padding:18px}.quote-mark{color:var(--mint);font:800 28px Georgia}.quote p{font:600 13px/1.6 Manrope;margin:4px 0 8px}.quote small{color:#9ebbb8;font-size:10px}
+.page{display:none}.page.active{display:block}.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin:20px 0}.stat-card{background:#142237;border:1px solid var(--line);padding:18px;border-radius:17px}.stat-card span{font-size:11px;color:var(--muted)}.stat-card strong{display:block;font:800 25px Manrope;margin:8px 0 2px}.stat-card small{font-size:10px;color:var(--mint)}
+.chart-panel{margin-top:15px}.bars{height:190px;display:flex;align-items:end;gap:clamp(8px,2vw,20px);padding:20px 5px 0;border-bottom:1px solid var(--line)}.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:end;height:100%;gap:8px}.bar{width:min(35px,70%);min-height:3px;border-radius:8px 8px 2px 2px;background:linear-gradient(180deg,#7de5c4,#368d91)}.bar-col small{color:var(--muted);font-size:10px}.chart-legend{display:flex;justify-content:space-between;margin-top:13px;color:var(--muted);font-size:11px}
+.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:20px}.setting{background:#142237;border:1px solid var(--line);border-radius:17px;padding:18px}.setting h3{font:700 14px Manrope;margin:0 0 6px}.setting p{font-size:11px;color:var(--muted);line-height:1.5;margin:0 0 13px}.field{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:11px 0;font-size:12px;color:#cbd7e7}.field input[type=number]{width:76px;background:#0d1928;border:1px solid var(--line);border-radius:9px;padding:8px;color:white}.field input[type=checkbox]{accent-color:var(--mint);width:17px;height:17px}.field select{background:#0d1928;color:white;border:1px solid var(--line);padding:8px;border-radius:9px}
+.custom-row{display:flex;gap:10px;margin:12px 0}.custom-row label{flex:1;font-size:11px;color:var(--muted)}.custom-row input{display:block;width:100%;margin-top:6px;background:#0d1928;border:1px solid var(--line);border-radius:9px;padding:10px;color:white}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:5;background:#0d1725ed;backdrop-filter:blur(18px);border-top:1px solid #25354a;display:flex;justify-content:center;gap:clamp(28px,8vw,100px);padding:12px 15px max(12px,env(safe-area-inset-bottom))}
+.nav-btn{border:0;background:transparent;color:#8193aa;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;min-width:54px}.nav-btn .nav-icon{font-size:19px}.nav-btn.active{color:var(--mint)}footer{text-align:center;color:#62758d;font-size:10px;margin-top:32px;letter-spacing:.5px}
+.toast{position:fixed;top:20px;left:50%;transform:translate(-50%,-130px);background:#1b3542;border:1px solid #397568;color:#e9fff7;padding:12px 18px;border-radius:12px;z-index:10;font-size:12px;transition:transform .3s}.toast.show{transform:translate(-50%,0)}
+.note{font-size:10px;line-height:1.5;color:var(--muted);margin-top:10px}
+@media(max-width:820px){.layout{grid-template-columns:1fr}.timer-panel{min-height:500px}.side-stack{display:grid;grid-template-columns:1fr 1fr}.quote{grid-column:1/-1}.stats-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:540px){.app{padding:18px 14px 100px}.date-chip{display:none}.welcome{align-items:start}.day-pill{font-size:10px}.panel{padding:18px}.side-stack{display:flex}.timer-panel{min-height:490px}.settings-grid{grid-template-columns:1fr}.stats-grid{gap:8px}.stat-card{padding:13px}.stat-card strong{font-size:22px}.timer-wrap{width:255px}.panel-head{gap:8px}.mode-switch button{padding:7px 9px;font-size:11px}}
+</style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+<div class="app">
+<header class="topbar">
+ <div class="brand">
+  <div class="logo" aria-label="Promenthi logo">
+   <svg viewBox="0 0 40 40" fill="none"><path d="M8 29V11.5c0-1.2 1.4-1.8 2.3-1l9.7 9 9.7-9c.9-.8 2.3-.2 2.3 1V29" stroke="#092b2b" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 29v-6.5l7 6 7-6V29" stroke="#092b2b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="20" cy="7" r="2.2" fill="#092b2b"/></svg>
+  </div>
+  <div><div class="brandname">promenthi</div><div class="tagline">THE ONE APP FOR USEFUL & EFFECTIVE STUDY</div></div>
+ </div>
+ <div class="top-right"><div class="date-chip" id="today"></div><button class="icon-btn" title="Settings" onclick="showPage('settings')">⚙</button></div>
+</header>
+
+<main>
+<section class="page active" id="home">
+ <div class="welcome"><div><div class="eyebrow">YOUR FOCUS SPACE</div><h1>Make today count.</h1><p>Small focused steps. Remarkable progress.</p></div><div class="day-pill" id="streakPill">✦ 0 day streak</div></div>
+ <div class="layout">
+  <section class="panel timer-panel">
+   <div class="panel-head"><div class="panel-title">Focus timer</div><div class="mode-switch"><button id="pomoMode" class="active" onclick="setMode('pomo')">Pomodoro</button><button id="customMode" onclick="setMode('custom')">Custom</button></div></div>
+   <div class="phase" id="phase">FOCUS SESSION · 1 OF 2</div>
+   <div class="timer-wrap"><svg viewBox="0 0 300 300"><circle class="track" cx="150" cy="150" r="130"/><circle class="progress" id="ring" cx="150" cy="150" r="130"/></svg><div style="text-align:center"><div class="time" id="clock">50:00</div><div class="timer-sub" id="timerSub">Stay present. One task at a time.</div></div></div>
+   <div class="timer-controls"><button class="secondary" onclick="resetTimer()">↺ Reset</button><button class="primary" id="startBtn" onclick="toggleTimer()">Start focus</button><button class="secondary" onclick="skipPhase()">Skip ↠</button></div>
+   <div class="session-info"><div class="mini-stat"><b id="setCount">0 / 2</b><span>SETS COMPLETED</span></div><div class="mini-stat"><b id="focusToday">0m</b><span>FOCUS TODAY</span></div><div class="mini-stat"><b id="remaining">2h 00m</b><span>PLANNED TIME</span></div></div>
+  </section>
+  <aside class="side-stack">
+   <section class="panel schedule-panel">
+    <div class="section-head"><h3>Session plan</h3><span class="muted">Today</span></div>
+    <div class="sets-control"><span>How many sets?</span><div class="stepper"><button onclick="changeSets(-1)">−</button><b id="setsValue">2</b><button onclick="changeSets(1)">+</button></div></div>
+    <div class="estimate"><span>Estimated duration</span><strong id="durationLabel">2h 00m</strong></div>
+    <button class="primary full" onclick="applyPlan()">Apply study plan</button>
+    <div class="note">1 Pomodoro set = 50 min focus + 10 min break. You can adjust durations in Settings.</div>
+   </section>
+   <section class="panel">
+    <div class="section-head"><h3>Your progress</h3><span class="muted">Overview</span></div>
+    <div class="quick-grid"><div class="quick"><div class="qicon">◷</div><b id="quickFocus">0m</b><span>FOCUS TODAY</span></div><div class="quick"><div class="qicon">✦</div><b id="quickStreak">0 days</b><span>CURRENT STREAK</span></div></div>
+   </section>
+   <section class="quote"><div class="quote-mark">“</div><p id="quoteText">Great things are done by a series of small things brought together.</p><small id="quoteAuthor">— Vincent van Gogh</small></section>
+  </aside>
+ </div>
+</section>
+
+<section class="page" id="stats">
+ <div class="welcome"><div><div class="eyebrow">YOUR JOURNEY</div><h1>Progress that adds up.</h1><p>Every focused minute is a step forward.</p></div></div>
+ <div class="stats-grid">
+  <div class="stat-card"><span>TODAY'S FOCUS</span><strong id="statToday">0m</strong><small>Keep building</small></div>
+  <div class="stat-card"><span>THIS WEEK</span><strong id="statWeek">0h</strong><small>Focus time</small></div>
+  <div class="stat-card"><span>THIS MONTH</span><strong id="statMonth">0h</strong><small>Focus time</small></div>
+  <div class="stat-card"><span>BEST STREAK</span><strong id="statBest">0</strong><small>Days in a row</small></div>
+ </div>
+ <section class="panel chart-panel"><div class="section-head"><h3>Weekly performance</h3><span class="muted">Last 7 days</span></div><div class="bars" id="weekBars"></div><div class="chart-legend"><span>Daily focused minutes</span><span id="weekTotal">0 minutes total</span></div></section>
+ <section class="panel chart-panel"><div class="section-head"><h3>Monthly performance</h3><span class="muted">Last 30 days</span></div><div class="bars" id="monthBars"></div><div class="chart-legend"><span>Daily focused minutes</span><span id="monthTotal">0 minutes total</span></div></section>
+</section>
+
+<section class="page" id="settings">
+ <div class="welcome"><div><div class="eyebrow">MAKE IT YOURS</div><h1>Settings</h1><p>Set up a study rhythm that works for you.</p></div></div>
+ <div class="settings-grid">
+  <section class="setting"><h3>⏱ Timer durations</h3><p>Choose your focus and break lengths. Changes apply to your next session.</p>
+   <div class="field">Focus duration <input type="number" id="focusMins" min="1" max="180" value="50"></div>
+   <div class="field">Short break <input type="number" id="breakMins" min="1" max="60" value="10"></div>
+   <div class="field">Custom session <input type="number" id="customMins" min="1" max="360" value="45"></div>
+   <button class="secondary full" onclick="saveDurations()">Save durations</button>
+  </section>
+  <section class="setting"><h3>🔔 Notifications & focus</h3><p>Allow Promenthi to notify you when a focus or break session ends.</p>
+   <div class="field">Browser notifications <button class="secondary" onclick="enableNotifications()" id="notifyBtn">Enable</button></div>
+   <div class="field">Sound alerts <input type="checkbox" id="soundToggle" checked></div>
+   <div class="field">Full-screen focus mode <input type="checkbox" id="fullscreenToggle"></div>
+   <div class="note">A browser app cannot block notifications or silence other apps/websites on your device. Full-screen mode can reduce on-screen distractions while Promenthi is open.</div>
+  </section>
+  <section class="setting"><h3>🎯 Study preferences</h3><p>Personalise how your timer behaves.</p>
+   <div class="field">Auto-start next phase <input type="checkbox" id="autoNext"></div>
+   <div class="field">Daily focus target <select id="dailyTarget"><option value="60">1 hour</option><option value="120" selected>2 hours</option><option value="180">3 hours</option><option value="240">4 hours</option></select></div>
+  </section>
+  <section class="setting"><h3>🗂 Your data</h3><p>Your study stats are saved in this browser on this device.</p>
+   <button class="secondary full" onclick="exportData()">Export study data</button>
+   <button class="subtle full" onclick="clearData()">Reset all study stats</button>
+  </section>
+ </div>
+</section>
+</main>
+<footer>MADE WITH PURPOSE · MADE BY ISHU</footer>
+</div>
+<nav class="bottom-nav"><button class="nav-btn active" data-page="home" onclick="showPage('home')"><span class="nav-icon">⌂</span>Home</button><button class="nav-btn" data-page="stats" onclick="showPage('stats')"><span class="nav-icon">▥</span>Stats</button><button class="nav-btn" data-page="settings" onclick="showPage('settings')"><span class="nav-icon">⚙</span>Settings</button></nav>
+<script>
+const $=id=>document.getElementById(id);
+const todayKey=()=>new Date().toLocaleDateString('en-CA');
+const dateObj=(offset=0)=>{let d=new Date();d.setDate(d.getDate()+offset);return d};
+let data=JSON.parse(localStorage.getItem('promenthiData')||'{"days":{},"bestStreak":0}');
+let config=JSON.parse(localStorage.getItem('promenthiConfig')||'{"focus":50,"rest":10,"custom":45,"sets":2,"mode":"pomo","sound":true,"auto":false}');
+let mode=config.mode||'pomo', phase='focus', running=false, remainingSec=0, phaseTotal=0, completedSets=0, interval=null, audioCtx=null;
+const quotes=[['It always seems impossible until it is done.','— Nelson Mandela'],['The secret of getting ahead is getting started.','— Mark Twain'],['Great things are done by a series of small things brought together.','— Vincent van Gogh'],['It does not matter how slowly you go as long as you do not stop.','— Confucius'],['The future depends on what you do today.','— Mahatma Gandhi'],['Success is the sum of small efforts, repeated day in and day out.','— Robert Collier'],['You don’t have to be perfect. You just have to begin.','— Unknown']];
+function save(){localStorage.setItem('promenthiData',JSON.stringify(data));localStorage.setItem('promenthiConfig',JSON.stringify(config))}
+function dayMinutes(key=todayKey()){return data.days[key]||0}
+function formatMins(n){if(n<60)return `${n}m`;let h=Math.floor(n/60),m=n%60;return m?`${h}h ${m}m`:`${h}h`}
+function plannedMins(){return mode==='pomo'?config.sets*(config.focus+config.rest):config.custom}
+function updateDate(){$('today').textContent=new Date().toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'})}
+function showPage(page){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===page));document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.page===page));if(page==='stats')renderStats();if(page==='home')renderHome()}
+function setMode(m){if(running)return toast('Pause the timer before changing mode.');mode=m;config.mode=m;phase='focus';completedSets=0;resetTimer();$('pomoMode').classList.toggle('active',m==='pomo');$('customMode').classList.toggle('active',m==='custom');$('phase').textContent=m==='pomo'?`FOCUS SESSION · 1 OF ${config.sets}`:'CUSTOM FOCUS SESSION';$('setsValue').textContent=config.sets;$('durationLabel').textContent=formatMins(plannedMins());$('remaining').textContent=formatMins(plannedMins());$('timerSub').textContent=m==='pomo'?'Stay present. One task at a time.':'Your time. Your pace.'}
+function changeSets(n){config.sets=Math.max(1,Math.min(12,config.sets+n));$('setsValue').textContent=config.sets;$('durationLabel').textContent=formatMins(config.sets*(config.focus+config.rest));$('phase').textContent=`FOCUS SESSION · 1 OF ${config.sets}`;save()}
+function applyPlan(){if(running)return toast('Pause the timer before applying a new plan.');completedSets=0;phase='focus';setMode(mode);toast('Your study plan is ready. Let’s focus!')}
+function resetTimer(){pauseTimer();phase='focus';remainingSec=(mode==='pomo'?config.focus:config.custom)*60;phaseTotal=remainingSec;renderTimer()}
+function renderTimer(){let m=Math.floor(remainingSec/60),s=remainingSec%60;$('clock').textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;let pct=phaseTotal?remainingSec/phaseTotal:1;$('ring').style.strokeDashoffset=816.8*(1-pct);$('ring').style.stroke=phase==='focus'?'var(--mint)':'var(--gold)';$('phase').textContent=phase==='focus'?(mode==='pomo'?`FOCUS SESSION · ${Math.min(completedSets+1,config.sets)} OF ${config.sets}`:'CUSTOM FOCUS SESSION'):'REST & RESET';$('timerSub').textContent=phase==='focus'?'Stay present. One task at a time.':'Step away. You have earned this break.';$('startBtn').textContent=running?'Pause':phase==='focus'?'Start focus':'Start break';$('setCount').textContent=`${completedSets} / ${mode==='pomo'?config.sets:1}`;$('remaining').textContent=formatMins(Math.ceil(remainingSec/60)+(mode==='pomo'?(Math.max(0,config.sets-completedSets-1)*(config.focus+config.rest)+ (phase==='focus'?config.rest:config.focus)):0));}
+function toggleTimer(){if(running){pauseTimer();return}running=true;if($('fullscreenToggle').checked&&!document.fullscreenElement)document.documentElement.requestFullscreen?.().catch(()=>{});$('startBtn').textContent='Pause';interval=setInterval(tick,1000)}
+function pauseTimer(){running=false;clearInterval(interval);interval=null;if($('startBtn'))$('startBtn').textContent='Resume'}
+function tick(){if(remainingSec>0){if(phase==='focus'){data.days[todayKey()]=(data.days[todayKey()]||0)+1/60;save()}remainingSec--;renderTimer();renderHome();return}pauseTimer();playAlert();notify(phase==='focus'?'Focus session complete':'Break time is over',phase==='focus'?'Great work! Time to take a break.':'Ready to get back to focus?');if(phase==='focus'){if(mode==='custom'){toast('Custom focus session complete!');return}completedSets++;if(completedSets>=config.sets){toast('Your study plan is complete. Well done!');phase='focus';remainingSec=config.focus*60;phaseTotal=remainingSec;renderTimer();renderHome();return}phase='break';remainingSec=config.rest*60;phaseTotal=remainingSec}else{phase='focus';remainingSec=config.focus*60;phaseTotal=remainingSec}renderTimer();if(config.auto){toggleTimer()}else toast(phase==='break'?'Focus complete — enjoy your break!':'Break complete — ready for another round?')}
+function skipPhase(){if(running)pauseTimer();if(phase==='focus'&&mode==='pomo'){completedSets++;if(completedSets>=config.sets){toast('All planned sets completed.');completedSets=config.sets;phase='focus';remainingSec=config.focus*60;phaseTotal=remainingSec;renderTimer();return}phase='break';remainingSec=config.rest*60}else{phase='focus';remainingSec=(mode==='pomo'?config.focus:config.custom)*60}phaseTotal=remainingSec;renderTimer();toast('Moved to the next phase.')}
+function playAlert(){if(!$('soundToggle').checked)return;try{audioCtx=audioCtx||new(window.AudioContext||window.webkitAudioContext)();let start=audioCtx.currentTime;for(let i=0;i<10;i++){let o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type='sine';o.frequency.value=i%2?880:660;g.gain.setValueAtTime(.0001,start+i);g.gain.exponentialRampToValueAtTime(.12,start+i+.03);g.gain.exponentialRampToValueAtTime(.0001,start+i+.45);o.connect(g);g.connect(audioCtx.destination);o.start(start+i);o.stop(start+i+.5)}}catch(e){}}
+async function enableNotifications(){if(!('Notification'in window))return toast('This browser does not support notifications.');let p=await Notification.requestPermission();$('notifyBtn').textContent=p==='granted'?'Enabled':'Try again';toast(p==='granted'?'Notifications enabled.':'Notification permission was not granted.')}
+function notify(title,body){if('Notification'in window&&Notification.permission==='granted'&&document.hidden)new Notification(title,{body})}
+function saveDurations(){config.focus=clamp($('focusMins').value,1,180);config.rest=clamp($('breakMins').value,1,60);config.custom=clamp($('customMins').value,1,360);save();if(!running)resetTimer();setMode(mode);toast('Timer durations saved.')}
+function clamp(v,min,max){return Math.max(min,Math.min(max,parseInt(v)||min))}
+function toast(msg){$('toast').textContent=msg;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),2600)}
+function streak(){let n=0,d=new Date();while(true){let k=d.toLocaleDateString('en-CA');if((data.days[k]||0)>=1){n++;d.setDate(d.getDate()-1)}else break}return n}
+function renderHome(){let mins=Math.floor(dayMinutes());$('focusToday').textContent=formatMins(mins);$('quickFocus').textContent=formatMins(mins);$('quickStreak').textContent=streak()+' days';$('streakPill').textContent='✦ '+streak()+' day streak';$('setCount').textContent=`${completedSets} / ${mode==='pomo'?config.sets:1}`;let q=quotes[Math.floor(Date.now()/86400000)%quotes.length];$('quoteText').textContent=q[0];$('quoteAuthor').textContent=q[1];}
+function renderStats(){let now=new Date(),week=[],month=[];for(let i=6;i>=0;i--){let d=dateObj(-i),k=d.toLocaleDateString('en-CA');week.push({label:d.toLocaleDateString(undefined,{weekday:'short'}),value:Math.floor(dayMinutes(k))})}for(let i=29;i>=0;i--){let d=dateObj(-i),k=d.toLocaleDateString('en-CA');month.push({label:d.getDate(),value:Math.floor(dayMinutes(k))})}
+let w=week.reduce((a,b)=>a+b.value,0),m=month.reduce((a,b)=>a+b.value,0);$('statToday').textContent=formatMins(Math.floor(dayMinutes()));$('statWeek').textContent=formatMins(w);$('statMonth').textContent=formatMins(m);$('statBest').textContent=data.bestStreak||streak();$('weekTotal').textContent=w+' minutes total';$('monthTotal').textContent=m+' minutes total';drawBars('weekBars',week);drawBars('monthBars',month)}
+function drawBars(id,items){let max=Math.max(30,...items.map(x=>x.value));$(id).innerHTML=items.map(x=>`<div class="bar-col" title="${x.value} focused minutes"><div class="bar" style="height:${Math.max(2,x.value/max*100)}%"></div><small>${x.label}</small></div>`).join('')}
+function exportData(){let blob=new Blob([JSON.stringify({data,config},null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='promenthi-study-data.json';a.click();URL.revokeObjectURL(a.href)}
+function clearData(){if(!confirm('Reset all saved study statistics? This cannot be undone.'))return;data={days:{},bestStreak:0};save();renderHome();renderStats();toast('Study statistics reset.')}
+$('soundToggle').addEventListener('change',e=>{config.sound=e.target.checked;save()});
+$('autoNext').addEventListener('change',e=>{config.auto=e.target.checked;save()});
+$('focusMins').value=config.focus;$('breakMins').value=config.rest;$('customMins').value=config.custom;$('soundToggle').checked=config.sound!==false;$('autoNext').checked=!!config.auto;$('setsValue').textContent=config.sets;
+updateDate();setMode(mode);renderHome();renderStats();
+</script>
+</body></html>
