@@ -27,6 +27,20 @@ jobs:
         run: |
           unzip -q PromenthiAndroid_ZeroCostLaunch.zip
           test -f PromenthiAndroid/app/build.gradle.kts
+      - name: Align Java and Kotlin JVM targets
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p = Path('PromenthiAndroid/app/build.gradle.kts')
+          s = p.read_text()
+          s = s.replace('JavaVersion.VERSION_1_8', 'JavaVersion.VERSION_17')
+          s = s.replace('JavaVersion.VERSION_8', 'JavaVersion.VERSION_17')
+          s = re.sub(r'jvmTarget\\s*=\\s*[\"\\']1\\.8[\"\\']', 'jvmTarget = \"17\"', s)
+          p.write_text(s)
+          print('Updated app/build.gradle.kts Java compatibility to 17')
+          print(p.read_text())
+          PY
       - name: Build debug APK
         run: gradle --no-daemon -p PromenthiAndroid assembleDebug
       - name: Upload APK artifact
